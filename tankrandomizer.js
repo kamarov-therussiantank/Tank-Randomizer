@@ -236,11 +236,11 @@ Backend.getInstance().getGarageContent(
 $("#tertiaryContent").append(`
     <div class='snippet' tabindex='-1' style='min-width: 100px; background: background: linear-gradient(to bottom, #4c4c4c, black); font-family: "TankTrouble"; font-size: 9px; color: white;'>
         <h2><span class='text' style='font-family: "TankTrouble"; color: white;'>Meet Tank Randomizer!</span></h2>
-        <p style='font-size: 12px;'>Let your tank have some fun! Randomness is here, bring your tanks near!</p>
+        <p style='font-size: 11px;'>Inject a dash of unpredictability into your tank's appearance with the Tank Randomizer!</p>
         <p>-----------------------</p>
-        <p style='font-size: 15px; color: gold;'>RANDOMIZE</p>
+        <p style='font-size: 13px; color: gold;'>RANDOMIZE</p>
         <div style='text-align: center;'>
-            <button class='randomize-button text' type='button' tabindex='-1' style='min-width: 34px; padding: 0 10px; font-family: "TankTrouble"; font-size: 10.5px; color: white;' onclick='randomize()'>ALL</button>
+            <button class='randomize-button text' type='button' tabindex='-1' style='min-width: 34px; padding: 0 10px; font-family: "TankTrouble"; font-size: 10.5px; color: white;' onclick='randomize()'>All Parts</button>
             <button class='randomize-button text' type='button' tabindex='-1' style='min-width: 34px; padding: 0 10px; font-family: "TankTrouble"; font-size: 10px; color: white;' onclick='randomizeA()'>Accessories</button>
             <button class='randomize-button text' type='button' tabindex='-1' style='min-width: 34px; padding: 0 10px; font-family: "TankTrouble"; font-size: 10.5px; color: white;' onclick='randomizeC()'>Paints</button>
         </div>
@@ -257,7 +257,7 @@ $(".randomize-button").css({
 $("#secondaryContent").append(`
     <div class='snippet' tabindex='-1' style='min-width: 100px; background-image: color(#666666);'>
         <h1 class='text' style='font-family: "TankTrouble"; font-size: 5; color: #333333;'>⚙️FIX ME🔧</h1>
-        <p><a class='report-bugs-link' href=https://docs.google.com/document/d/1z688XtRiuOLeXOKXmYuYpZbmX2H-vjcxGWjenR0FXag/edit?usp=drivesdk' style='text-decoration: underline; color: black; cursor: pointer;'>Report bugs here</a></p>
+        <p><a class='report-bugs-link' href=https://greasyfork.org/en/scripts/482239-tank-randomizer/feedback' style='text-decoration: underline; color: black; cursor: pointer;'>Reporting here</a></p>
     </div>
 `);
 
