@@ -19,4 +19,5 @@ What are you waiting for! Get it [here](https://greasyfork.org/en/scripts/482239
 2. Visit the Tank Trouble website.
 3. Click the "RANDOMIZE" button to let the Tank Randomizer work its magic.
 ****
+`Feedback:`
 Report any bugs or provide feedback [here](Forumlinkhere).
