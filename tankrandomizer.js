@@ -234,15 +234,15 @@ Backend.getInstance().getGarageContent(
 
 
 $("#tertiaryContent").append(`
-    <div class='snippet' tabindex='-1' style='min-width: 100px; background-image: url("/getimage.php?id=77"); font-family: "TankTrouble"; font-size: 9px; color: white;'>
+    <div class='snippet' tabindex='-1' style='min-width: 100px; background: background: linear-gradient(to bottom, #4c4c4c, black); font-family: "TankTrouble"; font-size: 9px; color: white;'>
         <h2><span class='text' style='font-family: "TankTrouble"; color: white;'>Meet Tank Randomizer!</span></h2>
         <p style='font-size: 12px;'>Let your tank have some fun! Randomness is here, bring your tanks near!</p>
         <p>-----------------------</p>
         <p style='font-size: 15px; color: gold;'>RANDOMIZE</p>
         <div style='text-align: center;'>
-            <button class='randomize-button text' type='button' tabindex='-1' style='min-width: 34px; padding: 0 10px; font-family: "TankTrouble"; font-size: 10.5px; color: white;' onclick='randomize()'>ALL Tank Parts</button>
-            <button class='randomize-button text' type='button' tabindex='-1' style='min-width: 34px; padding: 0 10px; font-family: "TankTrouble"; font-size: 10px; color: white;' onclick='randomizeA()'>Tank Accessories</button>
-            <button class='randomize-button text' type='button' tabindex='-1' style='min-width: 34px; padding: 0 10px; font-family: "TankTrouble"; font-size: 10.5px; color: white;' onclick='randomizeC()'>Tank Paints</button>
+            <button class='randomize-button text' type='button' tabindex='-1' style='min-width: 34px; padding: 0 10px; font-family: "TankTrouble"; font-size: 10.5px; color: white;' onclick='randomize()'>ALL</button>
+            <button class='randomize-button text' type='button' tabindex='-1' style='min-width: 34px; padding: 0 10px; font-family: "TankTrouble"; font-size: 10px; color: white;' onclick='randomizeA()'>Accessories</button>
+            <button class='randomize-button text' type='button' tabindex='-1' style='min-width: 34px; padding: 0 10px; font-family: "TankTrouble"; font-size: 10.5px; color: white;' onclick='randomizeC()'>Paints</button>
         </div>
     </div>
 `);
