@@ -257,7 +257,7 @@ $(".randomize-button").css({
 $("#secondaryContent").append(`
     <div class='snippet' tabindex='-1' style='min-width: 100px; background-image: color(#666666);'>
         <h1 class='text' style='font-family: "TankTrouble"; font-size: 5; color: #333333;'>⚙️FIX ME🔧</h1>
-        <p><a class='report-bugs-link' href=https://greasyfork.org/en/scripts/482239-tank-randomizer/feedback' style='text-decoration: underline; color: black; cursor: pointer;'>Reporting here</a></p>
+        <p><a class='report-bugs-link' href=https://greasyfork.org/en/scripts/482239-tank-randomizer/feedback' style='text-decoration: underline; color: black; cursor: pointer;'>Reportings here</a></p>
     </div>
 `);
 
