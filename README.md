@@ -1,5 +1,5 @@
 # Tank-Randomizer
-Bring an element of surprise to your tank customization experience with the Tank Randomizer! Inject a dash of unpredictability into your tank's appearance with the Tank Randomizer! Embrace the chaos as it randomly selects different tank parts, accessories, and paint colors to give your tank a fresh and unique look every time you click the "RANDOMIZE" button.
+Bring an element of surprise to your tank customization experience, inject a dash of unpredictability into your tank's appearance with the Tank Randomizer! Embrace the chaos as it randomly selects different tank parts, accessories, and paint colors to give your tank a fresh and unique look every time you click the "RANDOMIZE" button.
 ****
 `Download:`
 [Tank-Randomizer Userscript](https://greasyfork.org/en/scripts/482239-tank-randomizer).
