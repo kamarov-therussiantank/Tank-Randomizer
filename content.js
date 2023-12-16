@@ -234,7 +234,7 @@ Backend.getInstance().getGarageContent(
 
 
 $("#tertiaryContent").append(`
-    <div class='snippet' tabindex='-1' style='min-width: 100px; background: linear-gradient(to bottom, #4c4c4c, black); font-family: "TankTrouble"; font-size: 9px; color: white;'>
+    <div class='snippet' tabindex='-1' style='min-width: 100px; background: linear-gradient(to bottom, #292929, #242424); font-family: "TankTrouble"; font-size: 9px; color: white;'>
         <h2><span class='text' style='font-family: "TankTrouble"; color: white;'>Meet Tank Randomizer!</span></h2>
         <p style='font-size: 11px;'>Inject a dash of unpredictability into your tank's appearance with the Tank Randomizer!</p>
         <p>-----------------------</p>
@@ -253,10 +253,3 @@ $("#tertiaryContent").append(`
 $(".randomize-button").css({
     'margin-bottom': '10px'
 });
-
-$("#secondaryContent").append(`
-    <div class='snippet' tabindex='-1' style='min-width: 100px; background-image: color(#666666);'>
-        <h1 class='text' style='font-family: "TankTrouble"; font-size: 5; color: #333333;'>⚙️FIX ME🔧</h1>
-        <p><a class='report-bugs-link' href=https://greasyfork.org/en/scripts/482239-tank-randomizer/feedback' style='text-decoration: underline; color: black; cursor: pointer;'>Reportings here</a></p>
-    </div>
-`);
