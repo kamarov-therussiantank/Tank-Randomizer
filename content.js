@@ -236,7 +236,7 @@ Backend.getInstance().getGarageContent(
 $("#tertiaryContent").append(`
     <div class='snippet' tabindex='-1' style='min-width: 100px; background: linear-gradient(to bottom, #292929, #242424); font-family: "TankTrouble"; font-size: 9px; color: white;'>
         <h2><span class='text' style='font-family: "TankTrouble"; color: white;'>Meet Tank Randomizer!</span></h2>
-        <p style='font-size: 11px;'>Inject a dash of unpredictability into your tank's appearance with the Tank Randomizer!</p>
+        <p style='font-size: 10px; font-family: "Arial,sans serif";'>Inject a dash of unpredictability into your tank's appearance with the Tank Randomizer!</p>
         <p>-----------------------</p>
         <p style='font-size: 13px; color: gold;'>RANDOMIZE</p>
         <div style='text-align: center;'>
