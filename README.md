@@ -16,5 +16,4 @@ Bring an element of surprise to your tank customization experience, inject a das
 `Editors note:`
 
 There were a lot of mistakes during the actual construction of it, but with the help of my friend Commander, we managed to build it easily.
-
 Special thanks to him!
