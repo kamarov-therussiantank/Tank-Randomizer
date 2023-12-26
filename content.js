@@ -8,24 +8,25 @@
 // @match       https://*.tanktrouble.com/*
 // @desc        Randomize your tank in style!
 // @run-at      document-end
+// @grant       GM_addStyle
 // @require     https://update.greasyfork.org/scripts/482092/1297984/TankTrouble%20Development%20Library.js
 // @noframes
 // ==/UserScript==
 
-whenContentInitialized().then(() => {
-    function toDateTime(secs) {
-        var t = new Date(1970, 0, 1); // Epoch
-        t.setSeconds(secs);
-        return t;
-    }
+GM_addStyle(`
+.randomize-button {
+  margin-bottom: 10px;
+}
+`);
 
+whenContentInitialized().then(() => {
     var id = Users.getAllPlayerIds()[0];
     var turret = [];
     var back = [];
     var barrel = [];
     var front = [];
     var colours = [];
-    var baseColor = "";
+    var baseColor = '';
 
     function randomize() {
         randomizePaint();
@@ -40,7 +41,7 @@ whenContentInitialized().then(() => {
             null,
             null,
             id,
-            "back",
+            'back',
             back[Math.floor(Math.random() * back.length)],
             Caches.getPlayerDetailsCache()
         );
@@ -52,7 +53,7 @@ whenContentInitialized().then(() => {
             null,
             null,
             id,
-            "turret",
+            'turret',
             turret[Math.floor(Math.random() * turret.length)],
             Caches.getPlayerDetailsCache()
         );
@@ -64,7 +65,7 @@ whenContentInitialized().then(() => {
             null,
             null,
             id,
-            "front",
+            'front',
             front[Math.floor(Math.random() * front.length)],
             Caches.getPlayerDetailsCache()
         );
@@ -76,7 +77,7 @@ whenContentInitialized().then(() => {
             null,
             null,
             id,
-            "tread",
+            'tread',
             Math.floor(Math.random() * 25) + 1,
             Caches.getPlayerDetailsCache()
         );
@@ -88,7 +89,7 @@ whenContentInitialized().then(() => {
             null,
             null,
             id,
-            "barrel",
+            'barrel',
             barrel[Math.floor(Math.random() * barrel.length)],
             Caches.getPlayerDetailsCache()
         );
@@ -111,9 +112,9 @@ whenContentInitialized().then(() => {
             );
         }
 
-        setColorForPart("base");
-        setColorForPart("turret");
-        setColorForPart("tread");
+        setColorForPart('base');
+        setColorForPart('turret');
+        setColorForPart('tread');
     }
 
     function randomizeA() {
@@ -128,7 +129,7 @@ whenContentInitialized().then(() => {
             null,
             null,
             id,
-            "back",
+            'back',
             back[Math.floor(Math.random() * back.length)],
             Caches.getPlayerDetailsCache()
         );
@@ -140,7 +141,7 @@ whenContentInitialized().then(() => {
             null,
             null,
             id,
-            "turret",
+            'turret',
             turret[Math.floor(Math.random() * turret.length)],
             Caches.getPlayerDetailsCache()
         );
@@ -152,7 +153,7 @@ whenContentInitialized().then(() => {
             null,
             null,
             id,
-            "front",
+            'front',
             front[Math.floor(Math.random() * front.length)],
             Caches.getPlayerDetailsCache()
         );
@@ -164,7 +165,7 @@ whenContentInitialized().then(() => {
             null,
             null,
             id,
-            "tread",
+            'tread',
             Math.floor(Math.random() * 25) + 1,
             Caches.getPlayerDetailsCache()
         );
@@ -176,7 +177,7 @@ whenContentInitialized().then(() => {
             null,
             null,
             id,
-            "barrel",
+            'barrel',
             barrel[Math.floor(Math.random() * barrel.length)],
             Caches.getPlayerDetailsCache()
         );
@@ -204,36 +205,36 @@ whenContentInitialized().then(() => {
         }
 
         // Generate a new random color for each part
-        setColorForPart("base");
-        setColorForPart("turret");
-        setColorForPart("tread");
+        setColorForPart('base');
+        setColorForPart('turret');
+        setColorForPart('tread');
     }
 
     Backend.getInstance().getGarageContent(
         function (result) {
-            boxes = result["boxes"];
+            boxes = result['boxes'];
             for (box in boxes) {
-                accessories = boxes[box]["accessories"];
-                sprays = boxes[box]["sprayCans"];
+                accessories = boxes[box]['accessories'];
+                sprays = boxes[box]['sprayCans'];
                 for (accessory in accessories) {
                     thing = accessories[accessory];
-                    if (thing["type"] == "front") {
-                        front.push(thing["value"]);
+                    if (thing['type'] == 'front') {
+                        front.push(thing['value']);
                     }
-                    if (thing["type"] == "back") {
-                        back.push(thing["value"]);
+                    if (thing['type'] == 'back') {
+                        back.push(thing['value']);
                     }
-                    if (thing["type"] == "barrel") {
-                        barrel.push(thing["value"]);
+                    if (thing['type'] == 'barrel') {
+                        barrel.push(thing['value']);
                     }
-                    if (thing["type"] == "turret") {
-                        turret.push(thing["value"]);
+                    if (thing['type'] == 'turret') {
+                        turret.push(thing['value']);
                     }
                 }
                 for (spray in sprays) {
-                    thing = sprays[spray]["colour"];
-                    if (thing["type"]) {
-                        colours.push(thing["rawValue"]);
+                    thing = sprays[spray]['colour'];
+                    if (thing['type']) {
+                        colours.push(thing['rawValue']);
                     }
                 }
             }
@@ -247,29 +248,28 @@ whenContentInitialized().then(() => {
         Caches.getGarageContentCache()
     );
 
-
-    $("#tertiaryContent").append(`
-        <div class='snippet' tabindex='-1' style='min-width: 100px; background: background: linear-gradient(to bottom, #4c4c4c, black); font-family: "TankTrouble"; font-size: 9px; color: white;'>
-            <h2><span class='text' style='font-family: "TankTrouble"; color: white;'>Meet Tank Randomizer!</span></h2>
-            <p style='font-size: 11px;'>Inject a dash of unpredictability into your tank's appearance with the Tank Randomizer!</p>
-            <p>-----------------------</p>
-            <p style='font-size: 13px; color: gold;'>RANDOMIZE</p>
-            <div style='text-align: center;'>
-                <button class='randomize-button text' type='button' tabindex='-1' style='min-width: 34px; padding: 0 10px; font-family: "TankTrouble"; font-size: 10.5px; color: white;' onclick='randomize()'>All Parts</button>
-                <button class='randomize-button text' type='button' tabindex='-1' style='min-width: 34px; padding: 0 10px; font-family: "TankTrouble"; font-size: 10px; color: white;' onclick='randomizeA()'>Accessories</button>
-                <button class='randomize-button text' type='button' tabindex='-1' style='min-width: 34px; padding: 0 10px; font-family: "TankTrouble"; font-size: 10.5px; color: white;' onclick='randomizeC()'>Paints</button>
-            </div>
+    var snippet = $(`
+        <div id="randomizerSnippet" class="snippet">
+            <div class="header">Meet Tank Randomizer!</div>
+            Inject a dash of unpredictability into your tank's appearance with the Tank Randomizer!
+            <hr>
+            <div class="header" style="color: darkgoldenrod;">Randomize</div>
         </div>
     `);
+    var content = $('<div></div>');
+    var allPartsButton = $('<button class="randomize-button button" type="button" tabindex="-1">All Parts</button>');
+    var accessoriesButton = $('<button class="randomize-button button" type="button" tabindex="-1">Accessories</button>');
+    var paintsButton = $('<button class="randomize-button button" type="button" tabindex="-1">Paints</button>');
 
+    allPartsButton.on('mouseup', () => randomize());
+    accessoriesButton.on('mouseup', () => randomizeA());
+    paintsButton.on('mouseup', () => randomizeC());
 
+    content.append([allPartsButton, accessoriesButton, paintsButton]);
+    snippet.append(content);
+    $('#tertiaryContent').append(snippet);
 
-    // Apply margin-bottom through CSS to the buttons with the "randomize-button" class
-    $(".randomize-button").css({
-        'margin-bottom': '10px'
-    });
-
-    $("#secondaryContent").append(`
+    $('#secondaryContent').append(`
         <div class='snippet' tabindex='-1' style='min-width: 100px; background-image: color(#666666);'>
             <h1 class='text' style='font-family: "TankTrouble"; font-size: 5; color: #333333;'>⚙️FIX ME🔧</h1>
             <p><a class='report-bugs-link' href=https://greasyfork.org/en/scripts/482239-tank-randomizer/feedback' style='text-decoration: underline; color: black; cursor: pointer;'>Reportings here</a></p>
