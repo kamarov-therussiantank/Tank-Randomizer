@@ -2,7 +2,7 @@
 // @name        Tank-Randomizer
 // @author      Kamarov
 // @description Bring an element of surprise to your tank customization experience with the Tank Randomizer!
-// @version     0.0.2
+// @version     0.0.5
 // @namespace   https://github.com/kamarov-therussiantank
 // @license     GPL-3.0
 // @match       https://*.tanktrouble.com/*
@@ -250,10 +250,10 @@ whenContentInitialized().then(() => {
 
     var snippet = $(`
         <div id="randomizerSnippet" class="snippet">
-            <div class="header">Meet Tank Randomizer!</div>
-            Inject a dash of unpredictability into your tank's appearance with the Tank Randomizer!
+            <div class="header">Tank Randomizer</div>
+            Inject a dash of unpredictability into your tank's appearance
             <hr>
-            <div class="header" style="color: darkgoldenrod;">Randomize</div>
+            <div class="header" style="color: #e7c811;">Randomize</div>
         </div>
     `);
     var content = $('<div></div>');
@@ -267,12 +267,12 @@ whenContentInitialized().then(() => {
 
     content.append([allPartsButton, accessoriesButton, paintsButton]);
     snippet.append(content);
-    $('#tertiaryContent').append(snippet);
+    $('#secondaryContent').append(snippet);
 
-    $('#secondaryContent').append(`
+    $('#tertiaryContent').append(`
         <div class="snippet" tabindex="-1" style="min-width: 100px; background-image: color(#666666);">
-            <h1 class="text" style="font-family: "TankTrouble"; font-size: 5; color: #333333;">⚙️FIX ME🔧</h1>
-            <p><a class="report-bugs-link" href="https://greasyfork.org/en/scripts/482239-tank-randomizer/feedback" style="text-decoration: underline; color: black; cursor: pointer;">Reportings here</a></p>
+            <h2 class="text" style="font-family: "TankTrouble"; font-size: 5; color: #333333;">Feedback</h2>
+            <p><a class="report-bugs-link" href="https://greasyfork.org/en/scripts/482239-tank-randomizer/feedback" style="text-decoration: underline; color: black; cursor: pointer;">here</a></p>
         </div>
     `);
 });
