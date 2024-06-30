@@ -17,3 +17,5 @@ Bring an element of surprise to your tank customization experience, inject a das
 
 There were a lot of mistakes during the actual construction of it, but with the help of my friend Commander, we managed to build it easily.
 Special thanks to him!
+
+And Special thanks to Meemee. He created the first ever version of Tank Randmoizer.
