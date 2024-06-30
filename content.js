@@ -1,21 +1,25 @@
 // ==UserScript==
 // @name        Tank-Randomizer
-// @author      Kamarov
-// @description Bring an element of surprise to your tank customization experience with the Tank Randomizer!
-// @version     0.0.5
+// @author      kamarov
+// @description Bring an element of surprise to your tank customization experience with the Tank Randomizer,
+// @version     1.1.0
 // @namespace   https://github.com/kamarov-therussiantank
 // @license     GPL-3.0
 // @match       https://*.tanktrouble.com/*
-// @desc        Randomize your tank in style!
+// @desc        Randomizes your tank in just one click of a button.
 // @run-at      document-end
 // @grant       GM_addStyle
 // @require     https://update.greasyfork.org/scripts/482092/1297984/TankTrouble%20Development%20Library.js
 // @noframes
+// @downloadURL https://update.greasyfork.org/scripts/482239/Tank-Randomizer.user.js
+// @updateURL https://update.greasyfork.org/scripts/482239/Tank-Randomizer.meta.js
 // ==/UserScript==
 
 GM_addStyle(`
 .randomize-button {
   margin-bottom: 10px;
+  height: 20px;
+  width: 100px;
 }
 `);
 
@@ -34,90 +38,6 @@ whenContentInitialized().then(() => {
     }
 
     function randomizeTankcessories() {
-        Backend.getInstance().setAccessory(
-            function (result) {
-                Users.updateUser(id, true, false);
-            },
-            null,
-            null,
-            id,
-            'back',
-            back[Math.floor(Math.random() * back.length)],
-            Caches.getPlayerDetailsCache()
-        );
-
-        Backend.getInstance().setAccessory(
-            function (result) {
-                Users.updateUser(id, true, false);
-            },
-            null,
-            null,
-            id,
-            'turret',
-            turret[Math.floor(Math.random() * turret.length)],
-            Caches.getPlayerDetailsCache()
-        );
-
-        Backend.getInstance().setAccessory(
-            function (result) {
-                Users.updateUser(id, true, false);
-            },
-            null,
-            null,
-            id,
-            'front',
-            front[Math.floor(Math.random() * front.length)],
-            Caches.getPlayerDetailsCache()
-        );
-
-        Backend.getInstance().setAccessory(
-            function (result) {
-                Users.updateUser(id, true, false);
-            },
-            null,
-            null,
-            id,
-            'tread',
-            Math.floor(Math.random() * 25) + 1,
-            Caches.getPlayerDetailsCache()
-        );
-
-        Backend.getInstance().setAccessory(
-            function (result) {
-                Users.updateUser(id, true, false);
-            },
-            null,
-            null,
-            id,
-            'barrel',
-            barrel[Math.floor(Math.random() * barrel.length)],
-            Caches.getPlayerDetailsCache()
-        );
-    }
-
-    function randomizePaint() {
-        var selectedColor = colours[Math.floor(Math.random() * colours.length)];
-
-        function setColorForPart(part) {
-            Backend.getInstance().setColour(
-                function (result) {
-                    Users.updateUser(id, true, false);
-                },
-                function (result) { },
-                function (result) { },
-                id,
-                part,
-                selectedColor,
-                Caches.getPlayerDetailsCache()
-            );
-        }
-
-        setColorForPart('base');
-        setColorForPart('turret');
-        setColorForPart('tread');
-    }
-
-    function randomizeA() {
         randomizeTankcessoriesA();
     }
 
@@ -183,14 +103,16 @@ whenContentInitialized().then(() => {
         );
     }
 
-    function randomizeC() {
+    function randomizePaint() {
         randomizePaintC();
     }
 
     function randomizePaintC() {
-        var selectedColor = colours[Math.floor(Math.random() * colours.length)];
+        var selectedBaseColor = getRandomColorFromGarage();
+        var selectedTurretColor = getRandomColorFromGarage();
+        var selectedTreadColor = getRandomColorFromGarage();
 
-        function setColorForPart(part) {
+        function setColorForPart(part, color) {
             Backend.getInstance().setColour(
                 function (result) {
                     Users.updateUser(id, true, false);
@@ -199,15 +121,14 @@ whenContentInitialized().then(() => {
                 function (result) { },
                 id,
                 part,
-                selectedColor,
+                color,
                 Caches.getPlayerDetailsCache()
             );
         }
 
-        // Generate a new random color for each part
-        setColorForPart('base');
-        setColorForPart('turret');
-        setColorForPart('tread');
+        setColorForPart('base', selectedBaseColor);
+        setColorForPart('turret', selectedTurretColor);
+        setColorForPart('tread', selectedTreadColor);
     }
 
     Backend.getInstance().getGarageContent(
@@ -253,7 +174,7 @@ whenContentInitialized().then(() => {
             <div class="header">Tank Randomizer</div>
             Inject a dash of unpredictability into your tank's appearance
             <hr>
-            <div class="header" style="color: #e7c811;">Randomize</div>
+            <div class="header" style="color: #e7c811; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;">Randomize</div>
         </div>
     `);
     var content = $('<div></div>');
@@ -262,17 +183,14 @@ whenContentInitialized().then(() => {
     var paintsButton = $('<button class="randomize-button button" type="button" tabindex="-1">Paints</button>');
 
     allPartsButton.on('mouseup', () => randomize());
-    accessoriesButton.on('mouseup', () => randomizeA());
-    paintsButton.on('mouseup', () => randomizeC());
+    accessoriesButton.on('mouseup', () => randomizeTankcessoriesA());
+    paintsButton.on('mouseup', () => randomizePaintC());
 
     content.append([allPartsButton, accessoriesButton, paintsButton]);
     snippet.append(content);
     $('#secondaryContent').append(snippet);
 
-    $('#tertiaryContent').append(`
-        <div class="snippet" tabindex="-1" style="min-width: 100px; background-image: color(#666666);">
-            <h2 class="text" style="font-family: "TankTrouble"; font-size: 5; color: #333333;">Feedback</h2>
-            <p><a class="report-bugs-link" href="https://greasyfork.org/en/scripts/482239-tank-randomizer/feedback" style="text-decoration: underline; color: black; cursor: pointer;">here</a></p>
-        </div>
-    `);
+    function getRandomColorFromGarage() {
+        return colours[Math.floor(Math.random() * colours.length)];
+    }
 });
