@@ -14,8 +14,4 @@ Bring an element of surprise to your tank customization experience, inject a das
 3. Click the "RANDOMIZE" button to let the Tank Randomizer work its magic.
 ****
 `Editors note:`
-
-There were a lot of mistakes during the actual construction of it, but with the help of my friend Commander, we managed to build it easily.
-Special thanks to him!
-
 And Special thanks to Meemee. He created the first ever version of Tank Randmoizer.
