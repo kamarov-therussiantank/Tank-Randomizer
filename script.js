@@ -172,7 +172,6 @@ whenContentInitialized().then(() => {
     var snippet = $(`
         <div id="randomizerSnippet" class="snippet">
             <div class="header">Tank Randomizer</div>
-            Inject a dash of unpredictability into your tank's appearance
             <hr>
             <div class="header" style="color: #e7c811; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;">Randomize</div>
         </div>
