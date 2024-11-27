@@ -32,76 +32,72 @@ whenContentInitialized().then(() => {
     var colours = [];
     var baseColor = '';
 
-    function randomize() {
-        randomizePaint();
-        randomizeTankcessories();
+
+// List of LockedAccessories
+const backAccessories = ['27', '28', '29', '30', '31', '32'];
+const frontAccessories = ['27', '28', '29', '30'];
+const turretAccessories = ['27'];
+const barrelAccessories = ['27', '28', '29', '30', '31', '32'];
+
+// Store objects
+var lockedAccessories = {
+    back: backAccessories,
+    front: frontAccessories,
+    turret: turretAccessories,
+    barrel: barrelAccessories
+};
+
+function randomizeTankcessoriesA() {
+    // Function to apply a random accessory while considering locked accessories
+    function applyRandomAccessory(part, availableAccessories) {
+        let currentAccessory = getCurrentAccessory(part);
+        const lockedForPart = lockedAccessories[part] || [];
+        if (lockedForPart.includes(currentAccessory)) {
+            console.log(`The ${part} accessory (ID: ${currentAccessory}) is locked, no randomization will occur.`);
+            return;
+        }
+
+
+        // Filter out the locked accessories from the available ones for randomization
+        const available = availableAccessories.filter(accessory => !lockedForPart.includes(accessory));
+        if (available.length > 0) {
+            const randomAccessory = available[Math.floor(Math.random() * available.length)];
+            Backend.getInstance().setAccessory(
+                function (result) {
+                    Users.updateUser(id, true, false);
+                },
+                null,
+                null,
+                id,
+                part,
+                randomAccessory,
+                Caches.getPlayerDetailsCache()
+            );
+        }
     }
 
-    function randomizeTankcessories() {
-        randomizeTankcessoriesA();
+    // Get the currently equipped accessory for a given part
+    function getCurrentAccessory(part) {
+        switch (part) {
+            case 'back':
+                return ['27', '28', '29', '30', '31', '32'];
+            case 'front':
+                return ['27', '28', '29', '30'];
+            case 'turret':
+                return ['27'];
+            case 'barrel':
+                return ['27', '28', '29', '30', '31', '32'];
+            default:
+                return null;
+        }
     }
 
-    function randomizeTankcessoriesA() {
-        Backend.getInstance().setAccessory(
-            function (result) {
-                Users.updateUser(id, true, false);
-            },
-            null,
-            null,
-            id,
-            'back',
-            back[Math.floor(Math.random() * back.length)],
-            Caches.getPlayerDetailsCache()
-        );
-
-        Backend.getInstance().setAccessory(
-            function (result) {
-                Users.updateUser(id, true, false);
-            },
-            null,
-            null,
-            id,
-            'turret',
-            turret[Math.floor(Math.random() * turret.length)],
-            Caches.getPlayerDetailsCache()
-        );
-
-        Backend.getInstance().setAccessory(
-            function (result) {
-                Users.updateUser(id, true, false);
-            },
-            null,
-            null,
-            id,
-            'front',
-            front[Math.floor(Math.random() * front.length)],
-            Caches.getPlayerDetailsCache()
-        );
-
-        Backend.getInstance().setAccessory(
-            function (result) {
-                Users.updateUser(id, true, false);
-            },
-            null,
-            null,
-            id,
-            'tread',
-            Math.floor(Math.random() * 25) + 1,
-            Caches.getPlayerDetailsCache()
-        );
-
-        Backend.getInstance().setAccessory(
-            function (result) {
-                Users.updateUser(id, true, false);
-            },
-            null,
-            null,
-            id,
-            'barrel',
-            barrel[Math.floor(Math.random() * barrel.length)],
-            Caches.getPlayerDetailsCache()
-        );
-    }
+    // Apply accessories, avoiding locked ones for each part
+    applyRandomAccessory('back', back);
+    applyRandomAccessory('turret', turret);
+    applyRandomAccessory('front', front);
+    applyRandomAccessory('barrel', barrel);
+}
 
     function randomizePaint() {
         randomizePaintC();
@@ -177,15 +173,13 @@ whenContentInitialized().then(() => {
         </div>
     `);
     var content = $('<div></div>');
-    var allPartsButton = $('<button class="randomize-button button" type="button" tabindex="-1">All Parts</button>');
     var accessoriesButton = $('<button class="randomize-button button" type="button" tabindex="-1">Accessories</button>');
     var paintsButton = $('<button class="randomize-button button" type="button" tabindex="-1">Paints</button>');
 
-    allPartsButton.on('mouseup', () => randomize());
     accessoriesButton.on('mouseup', () => randomizeTankcessoriesA());
     paintsButton.on('mouseup', () => randomizePaintC());
 
-    content.append([allPartsButton, accessoriesButton, paintsButton]);
+    content.append([accessoriesButton, paintsButton]);
     snippet.append(content);
     $('#secondaryContent').append(snippet);
 
