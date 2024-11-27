@@ -2,7 +2,7 @@
 // @name        Tank-Randomizer
 // @author      kamarov
 // @description Bring an element of surprise to your tank customization experience with the Tank Randomizer,
-// @version     1.1.0
+// @version     3.0.0
 // @namespace   https://github.com/kamarov-therussiantank
 // @license     GPL-3.0
 // @match       https://*.tanktrouble.com/*
