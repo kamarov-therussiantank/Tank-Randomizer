@@ -2,11 +2,10 @@
 // @name        Tank-Randomizer
 // @author      kamarov
 // @description Bring an element of surprise to your tank customization experience with the Tank Randomizer,
-// @version     3.0.0
+// @version     4.0.0
 // @namespace   https://github.com/kamarov-therussiantank
 // @license     GPL-3.0
 // @match       https://*.tanktrouble.com/*
-// @desc        Randomizes your tank in just one click of a button.
 // @run-at      document-end
 // @grant       GM_addStyle
 // @require     https://update.greasyfork.org/scripts/482092/1297984/TankTrouble%20Development%20Library.js
@@ -21,6 +20,48 @@ GM_addStyle(`
   height: 20px;
   width: 100px;
 }
+.partSelectAccessory, .partSelectPaint {
+  cursor: pointer;
+  outline: none;
+  width: 78%;
+  border: 1px solid var(--jq-borderColorDefault);
+  border-radius: 5px;
+  background: var(--jq-bgColorDefault) var(--jq-widget-button-disabled-hovered-or-active-bg) 50% 50% repeat-x;
+  font-weight: 600;
+  font-size: 11px;
+  color: #555;
+  margin-bottom: 5px;
+  padding: 3px;
+}
+.partSelectAccessory:hover {
+  color: #1a1a1a;
+}
+.partSelectPaint:hover {
+  color: #1a1a1a;
+}
+:root.dark .partSelectAccessory:hover {
+  color: #fff;
+}
+:root.dark .partSelectPaint:hover {
+  color: #fff;
+}
+:root.dark .partSelectAccessory {
+  color: #e7e7e7;
+}
+:root.dark .partSelectPaint {
+  color: #e7e7e7;
+}
+.partSelectSection {
+  font-size: 12px;
+}
+.partTexts {
+  font-family: TankTrouble;
+  font-size: 12px;
+  color: #e7c811;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  margin-bottom: 5px;
+  margin-top: 3px;
+}
 `);
 
 whenContentInitialized().then(() => {
@@ -29,117 +70,165 @@ whenContentInitialized().then(() => {
     var back = [];
     var barrel = [];
     var front = [];
+    var treads = [];
     var colours = [];
     var baseColor = '';
 
-
-// List of LockedAccessories
-const backAccessories = ['27', '28', '29', '30', '31', '32'];
-const frontAccessories = ['27', '28', '29', '30'];
-const turretAccessories = ['27'];
-const barrelAccessories = ['27', '28', '29', '30', '31', '32'];
-
-// Store objects
-var lockedAccessories = {
-    back: backAccessories,
-    front: frontAccessories,
-    turret: turretAccessories,
-    barrel: barrelAccessories
-};
-
-function randomizeTankcessoriesA() {
-    // Function to apply a random accessory while considering locked accessories
-    function applyRandomAccessory(part, availableAccessories) {
-        let currentAccessory = getCurrentAccessory(part);
-        const lockedForPart = lockedAccessories[part] || [];
-        if (lockedForPart.includes(currentAccessory)) {
-            console.log(`The ${part} accessory (ID: ${currentAccessory}) is locked, no randomization will occur.`);
-            return;
-        }
-
-
-        // Filter out the locked accessories from the available ones for randomization
-        const available = availableAccessories.filter(accessory => !lockedForPart.includes(accessory));
-        if (available.length > 0) {
-            const randomAccessory = available[Math.floor(Math.random() * available.length)];
-            Backend.getInstance().setAccessory(
-                function (result) {
-                    Users.updateUser(id, true, false);
-                },
-                null,
-                null,
-                id,
-                part,
-                randomAccessory,
-                Caches.getPlayerDetailsCache()
-            );
-        }
+    function randomizeTurretPaint() {
+        randomizeTurretColor();
     }
 
-    // Get the currently equipped accessory for a given part
-    function getCurrentAccessory(part) {
-        switch (part) {
-            case 'back':
-                return ['27', '28', '29', '30', '31', '32'];
-            case 'front':
-                return ['27', '28', '29', '30'];
-            case 'turret':
-                return ['27'];
-            case 'barrel':
-                return ['27', '28', '29', '30', '31', '32'];
-            default:
-                return null;
-        }
+    function randomizeTurretColor() {
+        Backend.getInstance().setColour(
+            function(result) {
+                Users.updateUser(id, true, false);
+            },
+            null,
+            null,
+            id,
+            'turret',
+            colours[Math.floor(Math.random() * colours.length)],
+            Caches.getPlayerDetailsCache()
+        );
     }
 
-    // Apply accessories, avoiding locked ones for each part
-    applyRandomAccessory('back', back);
-    applyRandomAccessory('turret', turret);
-    applyRandomAccessory('front', front);
-    applyRandomAccessory('barrel', barrel);
-}
-
-    function randomizePaint() {
-        randomizePaintC();
+    function randomizeBasePaint() {
+        randomizeBaseColor();
     }
 
-    function randomizePaintC() {
-        var selectedBaseColor = getRandomColorFromGarage();
-        var selectedTurretColor = getRandomColorFromGarage();
-        var selectedTreadColor = getRandomColorFromGarage();
+    function randomizeBaseColor() {
+        Backend.getInstance().setColour(
+            function(result) {
+                Users.updateUser(id, true, false);
+            },
+            null,
+            null,
+            id,
+            'base',
+            colours[Math.floor(Math.random() * colours.length)],
+            Caches.getPlayerDetailsCache()
+        );
+    }
 
-        function setColorForPart(part, color) {
-            Backend.getInstance().setColour(
-                function (result) {
-                    Users.updateUser(id, true, false);
-                },
-                function (result) { },
-                function (result) { },
-                id,
-                part,
-                color,
-                Caches.getPlayerDetailsCache()
-            );
-        }
+    function randomizeTreadsPaint() {
+        randomizeTreadsColor();
+    }
 
-        setColorForPart('base', selectedBaseColor);
-        setColorForPart('turret', selectedTurretColor);
-        setColorForPart('tread', selectedTreadColor);
+    function randomizeTreadsColor() {
+        Backend.getInstance().setColour(
+            function(result) {
+                Users.updateUser(id, true, false);
+            },
+            null,
+            null,
+            id,
+            'tread',
+            colours[Math.floor(Math.random() * colours.length)],
+            Caches.getPlayerDetailsCache()
+        );
+    }
+
+    function randomizeTurretAccessory() {
+        randomizeTurretA();
+    }
+
+    function randomizeTurretA() {
+        Backend.getInstance().setAccessory(
+            function(result) {
+                Users.updateUser(id, true, false);
+            },
+            null,
+            null,
+            id,
+            'turret',
+            turret[Math.floor(Math.random() * turret.length)],
+            Caches.getPlayerDetailsCache()
+        );
+    }
+
+    function randomizeBarrelAccessory() {
+        randomizeBarrelA();
+    }
+
+    function randomizeBarrelA() {
+        Backend.getInstance().setAccessory(
+            function(result) {
+                Users.updateUser(id, true, false);
+            },
+            null,
+            null,
+            id,
+            'barrel',
+            barrel[Math.floor(Math.random() * barrel.length)],
+            Caches.getPlayerDetailsCache()
+        );
+    }
+
+    function randomizeBackAccessory() {
+        randomizeBackA();
+    }
+
+    function randomizeBackA() {
+        Backend.getInstance().setAccessory(
+            function(result) {
+                Users.updateUser(id, true, false);
+            },
+            null,
+            null,
+            id,
+            'back',
+            back[Math.floor(Math.random() * back.length)],
+            Caches.getPlayerDetailsCache()
+        );
+    }
+
+    function randomizeFrontAccessory() {
+        randomizeFrontA();
+    }
+
+    function randomizeFrontA() {
+        Backend.getInstance().setAccessory(
+            function(result) {
+                Users.updateUser(id, true, false);
+            },
+            null,
+            null,
+            id,
+            'front',
+            front[Math.floor(Math.random() * front.length)],
+            Caches.getPlayerDetailsCache()
+        );
+    }
+
+    function randomizeAllPartsAccessories() {
+        randomizeFrontAccessory();
+        randomizeBackAccessory();
+        randomizeTurretAccessory();
+        randomizeBarrelAccessory();
+    }
+
+    function randomizeAllPartsPaints() {
+        randomizeTurretPaint();
+        randomizeBasePaint();
+        randomizeTreadsPaint();
     }
 
     Backend.getInstance().getGarageContent(
-        function (result) {
-            boxes = result['boxes'];
-            for (box in boxes) {
-                accessories = boxes[box]['accessories'];
-                sprays = boxes[box]['sprayCans'];
-                for (accessory in accessories) {
-                    thing = accessories[accessory];
+        function(result) {
+            var boxes = result['boxes'];
+            for (var box in boxes) {
+                var accessories = boxes[box]['accessories'];
+                var sprays = boxes[box]['sprayCans'];
+                for (var accessory in accessories) {
+                    var thing = accessories[accessory];
                     if (thing['type'] == 'front') {
                         front.push(thing['value']);
                     }
                     if (thing['type'] == 'back') {
                         back.push(thing['value']);
+                    }
+                    if (thing['type'] == 'tread') {
+                        treads.push(thing['value']);
                     }
                     if (thing['type'] == 'barrel') {
                         barrel.push(thing['value']);
@@ -148,19 +237,17 @@ function randomizeTankcessoriesA() {
                         turret.push(thing['value']);
                     }
                 }
-                for (spray in sprays) {
-                    thing = sprays[spray]['colour'];
+                for (var spray in sprays) {
+                    var thing = sprays[spray]['colour'];
                     if (thing['type']) {
                         colours.push(thing['rawValue']);
                     }
                 }
             }
-
-            // Randomly select the base color
             baseColor = colours[Math.floor(Math.random() * colours.length)];
         },
-        function (res) { },
-        function (res) { },
+        function(res) {},
+        function(res) {},
         id,
         Caches.getGarageContentCache()
     );
@@ -169,19 +256,132 @@ function randomizeTankcessoriesA() {
         <div id="randomizerSnippet" class="snippet">
             <div class="header">Tank Randomizer</div>
             <hr>
-            <div class="header" style="color: #e7c811; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;">Randomize</div>
-        </div>
+            </div>
     `);
+
     var content = $('<div></div>');
-    var accessoriesButton = $('<button class="randomize-button button" type="button" tabindex="-1">Accessories</button>');
-    var paintsButton = $('<button class="randomize-button button" type="button" tabindex="-1">Paints</button>');
 
-    accessoriesButton.on('mouseup', () => randomizeTankcessoriesA());
-    paintsButton.on('mouseup', () => randomizePaintC());
+    var accessoriesButton = $('<button class="randomize-button button" type="button" tabindex="-1">Randomize</button>');
+    var barrelAccessoryButton = $('<button class="randomize-button button" type="button" tabindex="-1">Randomize</button>');
+    var turretAccessoryButton = $('<button class="randomize-button button" type="button" tabindex="-1">Randomize</button>');
+    var frontAccessoryButton = $('<button class="randomize-button button" type="button" tabindex="-1">Randomize</button>');
+    var backAccessoryButton = $('<button class="randomize-button button" type="button" tabindex="-1">Randomize</button>');
+    var paintButton = $('<button class="randomize-button button" type="button" tabindex="-1">Randomize</button>');
+    var turretPaintButton = $('<button class="randomize-button button" type="button" tabindex="-1">Randomize</button>');
+    var basePaintButton = $('<button class="randomize-button button" type="button" tabindex="-1">Randomize</button>');
+    var treadsPaintButton = $('<button class="randomize-button button" type="button" tabindex="-1">Randomize</button>');
+    var accessoryText = $('<div class="partTexts">Accessories</div>');
+    var paintText = $('<div class="partTexts">Paints</div>');
 
-    content.append([accessoriesButton, paintsButton]);
-    snippet.append(content);
-    $('#secondaryContent').append(snippet);
+    const createNewWrapper = $('<div class="createNewWrapper"></div>');
+    const accessoryPartSelect = $("<select class='partSelectAccessory'></select>");
+    const paintPartSelect = $("<select class='partSelectPaint'></select>");
+
+    const allAccessoriesOption = $('<option value="allAccessory">All</option>');
+        accessoryPartSelect.append(allAccessoriesOption);
+    const barrelAccessoriesOption = $('<option value="barrelAccessory">Barrel</option>');
+        accessoryPartSelect.append(barrelAccessoriesOption);
+    const turretAccessoriesOption = $('<option value="turretAccessory">Turret</option>');
+        accessoryPartSelect.append(turretAccessoriesOption);
+    const frontAccessoriesOption = $('<option value="frontAccessory">Front</option>');
+        accessoryPartSelect.append(frontAccessoriesOption);
+    const backAccessoriesOption = $('<option value="backAccessory">Back</option>');
+        accessoryPartSelect.append(backAccessoriesOption);
+    const allPaintsOption = $('<option value="allPaints">All</option>');
+        paintPartSelect.append(allPaintsOption);
+    const turretPaintsOption = $('<option value="turretPaints">Turret</option>');
+        paintPartSelect.append(turretPaintsOption);
+    const basePaintsOption = $('<option value="basePaints">Base</option>');
+        paintPartSelect.append(basePaintsOption);
+    const treadsPaintsOption = $('<option value="treadsPaints">Treads</option>');
+        paintPartSelect.append(treadsPaintsOption);
+
+    accessoriesButton.on('mouseup', () => randomizeAllPartsAccessories());
+    barrelAccessoryButton.on('mouseup', () => randomizeBarrelAccessory());
+    turretAccessoryButton.on('mouseup', () => randomizeTurretAccessory());
+    frontAccessoryButton.on('mouseup', () => randomizeFrontAccessory());
+    backAccessoryButton.on('mouseup', () => randomizeBackAccessory());
+    paintButton.on('mouseup', () => randomizeAllPartsPaints());
+    turretPaintButton.on('mouseup', () => randomizeTurretPaint());
+    basePaintButton.on('mouseup', () => randomizeBasePaint());
+    treadsPaintButton.on('mouseup', () => randomizeTreadsPaint());
+
+// Function to toggle buttons based on selection
+function toggleButtonsBasedOnSelection() {
+    const selectedAccessoryValue = accessoryPartSelect.val();
+    const selectedPaintValue = paintPartSelect.val();
+
+// Hide all buttons
+    accessoriesButton.show();
+    barrelAccessoryButton.hide();
+    turretAccessoryButton.hide();
+    frontAccessoryButton.hide();
+    backAccessoryButton.hide();
+    paintButton.show();
+    turretPaintButton.hide();
+    basePaintButton.hide();
+    treadsPaintButton.hide();
+
+// Show accessory buttons based on selection
+    if (selectedAccessoryValue === "allAccessories") {
+        accessoriesButton.show();
+    } else if (selectedAccessoryValue === "barrelAccessory") {
+        barrelAccessoryButton.show();
+        accessoriesButton.hide();
+    } else if (selectedAccessoryValue === "turretAccessory") {
+        turretAccessoryButton.show();
+        accessoriesButton.hide();
+    } else if (selectedAccessoryValue === "frontAccessory") {
+        frontAccessoryButton.show();
+        accessoriesButton.hide();
+    } else if (selectedAccessoryValue === "backAccessory") {
+        backAccessoryButton.show();
+        accessoriesButton.hide();
+    }
+
+// Show paint buttons based on selection
+    if (selectedPaintValue === "allPaints") {
+        paintButton.show();
+    } else if (selectedPaintValue === "turretPaints") {
+        turretPaintButton.show();
+        paintButton.hide();
+    } else if (selectedPaintValue === "basePaints") {
+        basePaintButton.show();
+        paintButton.hide();
+    } else if (selectedPaintValue === "treadsPaints") {
+        treadsPaintButton.show();
+        paintButton.hide();
+    }
+}
+
+// Event listeners for selection changes
+   accessoryPartSelect.on('change', toggleButtonsBasedOnSelection);
+   paintPartSelect.on('change', toggleButtonsBasedOnSelection);
+
+// Append elements to the DOM
+   createNewWrapper.append(accessoryText);
+   createNewWrapper.append(accessoryPartSelect);
+   createNewWrapper.append(accessoriesButton);
+   createNewWrapper.append(barrelAccessoryButton);
+   createNewWrapper.append(turretAccessoryButton);
+   createNewWrapper.append(frontAccessoryButton);
+   createNewWrapper.append(backAccessoryButton);
+   createNewWrapper.append(paintText);
+   createNewWrapper.append(paintPartSelect);
+   createNewWrapper.append(paintButton);
+   createNewWrapper.append(turretPaintButton);
+   createNewWrapper.append(basePaintButton);
+   createNewWrapper.append(treadsPaintButton);
+
+ content.append(createNewWrapper);
+
+ snippet.append(content);
+$('#secondaryContent').append(snippet);
+
+// Initial toggle based on current selection values
+$(document).ready(function() {
+    toggleButtonsBasedOnSelection();
+});
 
     function getRandomColorFromGarage() {
         return colours[Math.floor(Math.random() * colours.length)];
