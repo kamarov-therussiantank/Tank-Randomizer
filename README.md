@@ -12,4 +12,4 @@ Bring an element of surprise to your tank customization experience, inject a das
 3. Click a button to let the Tank Randomizer work its magic.
 ****
 `Editors note:`
-And special thanks to Meemee. He created the first ever version of Tank Randmoizer.
+And special thanks to Meemee. He created the first ever version of Tank Randmoizer. And to Captain-Rage for inspiration.
